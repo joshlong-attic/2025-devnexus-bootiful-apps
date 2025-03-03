@@ -26,3 +26,21 @@ you'll need `protoc` as well as `grpcurl` or equivalent to build and try out the
 - new spring auth server (pointing to config server, which conveniently has all the config)
 - new oauth client (pointing to config server, which conveniently has all the config)   
 - And, thank buddha, `grpcurl` supports sending headers. So to make the demo faster, I could write a quick endpoint in the client that leaks the token then run `grpcurl` with a header, and point it to the gateway (which is also the client).
+
+when it comes to security, i specifically want to enable the passkeys and one time token support on the auth server. 
+
+so the beats would be:
+
+* spring data jdbc
+* modulith
+* grpc
+* graphql
+* rest(-ish)
+* config server
+* auth server and passkeys
+* resource server
+* gateway && oauth client
+* graalvm/virtual threads
+
+curtsy.
+
