@@ -104,7 +104,6 @@ class DogAdoptionApiController {
     void adopt(@PathVariable int dogId, @RequestParam String name) {
         this.dogAdoptionService.adopt(dogId, name);
     }
-
 }
 
 @Service
@@ -143,6 +142,7 @@ interface DogRepository extends ListCrudRepository<Dog, Integer> {
 record Dog(@Id int id, String name, String owner, String description) {
 }
 
+/*
 
 @Configuration
 @ImportRuntimeHints(HintsConfiguration.Hints.class)
@@ -158,4 +158,4 @@ class HintsConfiguration {
         }
     }
 
-}
+}*/
