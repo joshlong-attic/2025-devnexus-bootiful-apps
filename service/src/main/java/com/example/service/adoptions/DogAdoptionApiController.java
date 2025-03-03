@@ -5,7 +5,13 @@ import com.example.service.adoptions.grpc.AdoptionsGrpc;
 import com.example.service.adoptions.grpc.DogsResponse;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import org.springframework.aot.hint.MemberCategory;
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -17,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.Collection;
 
 // grpcurl -plaintext -d '{}' localhost:8080  Adoptions.All
@@ -133,3 +140,18 @@ record Dog(@Id int id, String name, String owner, String description) {
 }
 
 
+@Configuration
+@ImportRuntimeHints(HintsConfiguration.Hints.class)
+class HintsConfiguration {
+
+    static class Hints implements RuntimeHintsRegistrar {
+
+        @Override
+        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            var mcs = MemberCategory.values();
+            for (var c : new Class<?>[]{Instant.class})
+                hints.reflection().registerType(c, mcs);
+        }
+    }
+
+}
