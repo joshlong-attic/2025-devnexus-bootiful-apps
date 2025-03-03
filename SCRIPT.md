@@ -58,8 +58,55 @@ class DogAdoptionApiController {
 ```
 
 * test: ` http --form POST http://localhost:8080/dogs/45/adoptions name=jlong `
-* nice, but that's old hat. 
-* k, what bout graphql? it's schema-first, so let's define the schema in `src/main/proto` (_not_ `src/main/resources/proto`!)
+* nice, but that's old hat.
+* k, well, what about graphql? it's schema-first, as well. so let's define the schema in `src/main/resources/graphql/adoptions.graphqls`:
+
+```graphql
+type Dog {
+    id: Int
+    name: String
+    owner: String
+    description: String
+}
+
+type Mutation {
+    adopt(dogId:Int, name:String): Boolean
+}
+
+type Query {
+    all: [Dog]
+}
+```
+
+* now let's define the controller for the graphql endpoint:
+
+```java
+
+@Controller
+class DogGraphQlController {
+
+    private final DogAdoptionService dogAdoptionService;
+
+    DogGraphQlController(DogAdoptionService dogAdoptionService) {
+        this.dogAdoptionService = dogAdoptionService;
+    }
+
+    @QueryMapping
+    Collection<Dog> all() {
+        return this.dogAdoptionService.all();
+    }
+
+    @MutationMapping
+    boolean adopt(@Argument int dogId, @Argument String name) {
+        this.dogAdoptionService.adopt(dogId, name);
+        return true;
+    }
+}
+```
+
+* make sure to define `spring.graphql.graphiql.enabled` == `true`.
+* goto `localhost:8080/graphiql`
+* k, what bout grpc? it's schema-first, so let's define the schema in `src/main/proto` (_not_ `src/main/resources/proto`!)
 
 ```protobuf
 syntax = "proto3";
