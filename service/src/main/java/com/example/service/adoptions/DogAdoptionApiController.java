@@ -20,10 +20,37 @@ import org.springframework.grpc.server.service.GrpcService;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Map;
+
+
+@Controller
+class DogAdoptionHtmlController {
+
+    private final DogAdoptionService dogAdoptionService;
+
+    DogAdoptionHtmlController(DogAdoptionService dogAdoptionService) {
+        this.dogAdoptionService = dogAdoptionService;
+    }
+
+    @PostMapping("/adoptions.html")
+    String adopt(@RequestParam int dogId, @RequestParam String name) {
+        this.dogAdoptionService.adopt(dogId, name);
+        return "redirect:/dogs.html";
+    }
+
+    @GetMapping("/dogs.html")
+    String dogs(Model model) {
+        model.addAllAttributes(Map.of("dogs", this.dogAdoptionService.all()));
+        return "dogs";
+    }
+}
+
 
 // grpcurl -plaintext -d '{}' localhost:8080  Adoptions.All
 // grpcurl -plaintext -d '{"id":"45","name":"cbono"}' localhost:8080  Adoptions.Adopt
@@ -119,7 +146,10 @@ class DogAdoptionService {
     }
 
     Collection<Dog> all() {
-        return this.dogRepository.findAll();
+        return this.dogRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Dog::id))
+                .toList();
     }
 
     void adopt(int id, String owner) {
