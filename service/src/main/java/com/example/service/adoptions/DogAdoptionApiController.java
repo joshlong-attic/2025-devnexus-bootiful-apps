@@ -29,8 +29,9 @@ class DogGraphQlController {
     }
 
     @MutationMapping
-    void adopt(@Argument int dogId, @Argument String name) {
+    boolean adopt(@Argument int dogId, @Argument String name) {
         this.dogAdoptionService.adopt(dogId, name);
+        return true;
     }
 }
 
