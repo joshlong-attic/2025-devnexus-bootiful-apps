@@ -6,11 +6,8 @@ option java_package = "com.example.service.adoptions.grpc";
 option java_outer_classname = "AdoptionsProto";
 
 service Adoptions {
-
   rpc Adopt (AdoptionRequest) returns (google.protobuf.Empty) {}
-
   rpc All (google.protobuf.Empty) returns (DogsResponse) {}
-
 }
 
 message AdoptionRequest {
