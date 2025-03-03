@@ -11,3 +11,8 @@ I want to show:
 * HTMX
 * production worthiness
 
+## requirements
+
+you'll need Java 23 or later
+
+you'll need `protoc` as well as `grpcurl` or equivalent to build and try out the spring grpc examples.

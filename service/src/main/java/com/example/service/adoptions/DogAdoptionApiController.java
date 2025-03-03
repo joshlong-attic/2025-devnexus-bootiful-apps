@@ -1,11 +1,17 @@
 package com.example.service.adoptions;
 
+import com.example.service.adoptions.grpc.AdoptionRequest;
+import com.example.service.adoptions.grpc.AdoptionsGrpc;
+import com.example.service.adoptions.grpc.DogsResponse;
+import com.google.protobuf.Empty;
+import io.grpc.stub.StreamObserver;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.grpc.server.service.GrpcService;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +19,38 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+
+@GrpcService
+class DogAdoptionGrpcService extends AdoptionsGrpc.AdoptionsImplBase {
+
+    private final DogAdoptionService dogAdoptionService;
+
+    DogAdoptionGrpcService(DogAdoptionService dogAdoptionService) {
+        this.dogAdoptionService = dogAdoptionService;
+    }
+
+    @Override
+    public void adopt(AdoptionRequest request, StreamObserver<Empty> responseObserver) {
+        this.dogAdoptionService.adopt(request.getDogId(), request.getName());
+    }
+
+    @Override
+    public void all(Empty request, StreamObserver<DogsResponse> responseObserver) {
+        var grpcDogs = this.dogAdoptionService
+                .all()
+                .stream()
+                .map(d -> com.example.service.adoptions.grpc.Dog.newBuilder()
+                        .setDogId(d.id())
+                        .setName(d.name())
+                        .build())
+                .toList();
+
+        var dr = DogsResponse.newBuilder();
+        dr.addAllDogs(grpcDogs);
+        responseObserver.onNext(dr.build());
+        responseObserver.onCompleted();
+    }
+}
 
 @Controller
 class DogGraphQlController {
