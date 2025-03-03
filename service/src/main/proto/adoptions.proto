@@ -5,7 +5,6 @@ option java_multiple_files = true;
 option java_package = "com.example.service.adoptions.grpc";
 option java_outer_classname = "AdoptionsProto";
 
-// The greeting service definition.
 service Adoptions {
 
   rpc Adopt (AdoptionRequest) returns (google.protobuf.Empty) {}
@@ -14,7 +13,6 @@ service Adoptions {
 
 }
 
-// The request message containing the user's name.
 message AdoptionRequest {
   int32 dogId = 1;
   string name = 2;
