@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-
+// grpcurl -plaintext -d '{}' localhost:8080  Adoptions.All
+// grpcurl -plaintext -d '{"id":"45","name":"cbono"}' localhost:8080  Adoptions.Adopt
 @GrpcService
 class DogAdoptionGrpcService extends AdoptionsGrpc.AdoptionsImplBase {
 
@@ -31,7 +32,9 @@ class DogAdoptionGrpcService extends AdoptionsGrpc.AdoptionsImplBase {
 
     @Override
     public void adopt(AdoptionRequest request, StreamObserver<Empty> responseObserver) {
-        this.dogAdoptionService.adopt(request.getDogId(), request.getName());
+        this.dogAdoptionService.adopt(request.getId(), request.getName());
+        responseObserver.onNext(Empty.getDefaultInstance());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -40,7 +43,7 @@ class DogAdoptionGrpcService extends AdoptionsGrpc.AdoptionsImplBase {
                 .all()
                 .stream()
                 .map(d -> com.example.service.adoptions.grpc.Dog.newBuilder()
-                        .setDogId(d.id())
+                        .setId(d.id())
                         .setName(d.name())
                         .build())
                 .toList();

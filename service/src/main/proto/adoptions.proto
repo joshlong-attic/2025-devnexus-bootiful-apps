@@ -14,12 +14,12 @@ service Adoptions {
 }
 
 message AdoptionRequest {
-  int32 dogId = 1;
+  int32 id = 1;
   string name = 2;
 }
 
 message Dog {
-  int32  dogId = 1;
+  int32  id = 1;
   string  name = 2;
   string  owner = 3;
   string  description = 4;
