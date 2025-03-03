@@ -1,8 +1,9 @@
 # Script
 
-* spring petclinic
-* peanut, prancer
+* spring petclinic?
+* meet peanut and prancer
 * start.spring.io (`service`): `config client`, `data jdbc`, `graalvm`, `web`, `modulith`, `grpc`, `postgres`, `graphql`, `resource server`, `devtools`
+  * here's the full [share-able link](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.4-SNAPSHOT&packaging=jar&jvmVersion=23&groupId=com.example&artifactId=service&name=service&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.service&dependencies=web,postgresql,modulith,oauth2-resource-server,data-jdbc,native,spring-grpc,graphql,cloud-config-client,devtools)
 * manually add:
 
 ```xml
@@ -12,7 +13,7 @@
 </dependency>
 ```
 
-_or_, if `0.4.0` is out, just add:
+_Or_, if `0.4.0` is out, just add:
 
 ```xml
 <dependency>
@@ -117,3 +118,6 @@ class DogGraphQlController {
 
 
 ```
+
+
+* well, we've handled the api aspect. we've adopted Prancer. but how did we find him? for that, join Dr. Mark Pollack and me in an hour or two as we look at the amazing Spring AI project
