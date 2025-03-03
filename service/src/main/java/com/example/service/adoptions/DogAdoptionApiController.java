@@ -3,6 +3,9 @@ package com.example.service.adoptions;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,13 +13,34 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+
 @Controller
-@ResponseBody
-class DogAdoptionController {
+class DogGraphQlController {
 
     private final DogAdoptionService dogAdoptionService;
 
-    DogAdoptionController(DogAdoptionService dogAdoptionService) {
+    DogGraphQlController(DogAdoptionService dogAdoptionService) {
+        this.dogAdoptionService = dogAdoptionService;
+    }
+
+    @QueryMapping
+    Collection<Dog> all() {
+        return this.dogAdoptionService.all();
+    }
+
+    @MutationMapping
+    void adopt(@Argument int dogId, @Argument String name) {
+        this.dogAdoptionService.adopt(dogId, name);
+    }
+}
+
+@Controller
+@ResponseBody
+class DogAdoptionApiController {
+
+    private final DogAdoptionService dogAdoptionService;
+
+    DogAdoptionApiController(DogAdoptionService dogAdoptionService) {
         this.dogAdoptionService = dogAdoptionService;
     }
 
