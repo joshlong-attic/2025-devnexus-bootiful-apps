@@ -2,6 +2,8 @@
 
 * spring petclinic?
 * meet peanut and prancer
+* let's build a service. spring is amazing at this sort of thing. i was just at confoo conference in magnificent Montreal, Canada. Fun fact, the conference _used_ to be all about PHP. I freebased PHP once! It sucked! It was super stressful, having the ability to express types that guaranteed me absolutely nothing in performance optimizations or type safety. 
+* my hairline receded TEN INCHES! never doing that again! 
 * start.spring.io (`service`): `config client`, `data jdbc`, `graalvm`, `web`, `modulith`, `grpc`, `postgres`, `graphql`, `resource server`, `devtools`
   * here's the full [share-able link](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.4-SNAPSHOT&packaging=jar&jvmVersion=23&groupId=com.example&artifactId=service&name=service&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.service&dependencies=web,postgresql,modulith,oauth2-resource-server,data-jdbc,native,spring-grpc,graphql,cloud-config-client,devtools)
 * manually add:
