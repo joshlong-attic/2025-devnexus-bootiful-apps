@@ -6,10 +6,9 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @Controller
 @ResponseBody
@@ -19,6 +18,11 @@ class DogAdoptionController {
 
     DogAdoptionController(DogAdoptionService dogAdoptionService) {
         this.dogAdoptionService = dogAdoptionService;
+    }
+
+    @GetMapping("/dogs")
+    Collection<Dog> allDogs() {
+        return this.dogAdoptionService.all();
     }
 
     // http --form POST http://localhost:8080/dogs/45/adoptions name=jlong
@@ -40,6 +44,10 @@ class DogAdoptionService {
     DogAdoptionService(DogRepository dogRepository, ApplicationEventPublisher publisher) {
         this.dogRepository = dogRepository;
         this.publisher = publisher;
+    }
+
+    Collection<Dog> all() {
+        return this.dogRepository.findAll();
     }
 
     void adopt(int id, String owner) {
