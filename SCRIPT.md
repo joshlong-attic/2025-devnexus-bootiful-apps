@@ -262,5 +262,5 @@ public class AuthApplication {
 
 * it'll require some configuration. and indeed a lot of our services require configuration. so let's centralize that, as well, using the spring cloud config server.
 * start.spring.io (`config`): `Config Server`, `Devtools`, `Web`
-* specify the git.uri at `$HOME/Desktop/config/`
+* specify the git.uri at `$HOME/Desktop/config/`; `server.port = 8888`; add `@EnableConfigServer` 
 * 
