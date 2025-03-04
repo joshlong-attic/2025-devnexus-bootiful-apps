@@ -47,7 +47,7 @@ public class AuthApplication {
                         .anyRequest().authenticated()
                 )
                 .oneTimeTokenLogin(configurer -> configurer.tokenGenerationSuccessHandler((request, response, oneTimeToken) -> {
-                    var msg = "go to http://localhost:8080/login/ott?token=" + oneTimeToken.getTokenValue();
+                    var msg = "go to http://localhost:9090/login/ott?token=" + oneTimeToken.getTokenValue();
                     System.out.println(msg);
                     response.setContentType(MediaType.TEXT_PLAIN_VALUE);
                     response.getWriter().print("you've got console mail!");
@@ -55,7 +55,7 @@ public class AuthApplication {
                 .webAuthn(c -> c
                         .rpId("localhost")
                         .rpName("bootiful passkeys")
-                        .allowedOrigins("http://localhost:8080")
+                        .allowedOrigins("http://localhost:9090")
                 )
                 .formLogin(Customizer.withDefaults())
                 .build();
