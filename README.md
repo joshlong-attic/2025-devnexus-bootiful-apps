@@ -1,21 +1,8 @@
-# Devnexus 2025 Bootiful Apps
+# Devnexus 2025: Bootiful Apps
 
 Hi, Spring fans! in this installment we look at how to build production worthy Spring Boot apps in 2025!
 
-I want to show:
-
-* modulith 
-* gRPC
-* GraphQL
-* security
-* HTMX
-* production worthiness
-
-## requirements
-
-you'll need Java 23 or later
-
-you'll need `protoc` as well as `grpcurl` or equivalent to build and try out the spring grpc examples.
+You'll need `protoc` as well as `grpcurl` or equivalent to build and try out the spring grpc examples. you'll need maven. and java 23 or later, ideally graalvm. 
 
 ## direction..
 
@@ -35,9 +22,7 @@ grpcurl -H 'Authorization: Bearer token123' \
         Adoptions/YourMethodName
 ```
 
-when it comes to security, i specifically want to enable the passkeys and one time token support on the auth server. 
 
-so the beats would be:
 
 * spring data jdbc
 * modulith
@@ -45,7 +30,7 @@ so the beats would be:
 * graphql
 * rest(-ish)
 * config server
-* auth server and passkeys
+* auth server, one-time tokens, and passkeys
 * resource server
 * gateway && oauth client
 * graalvm/virtual threads
