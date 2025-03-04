@@ -31,7 +31,7 @@ public class AuthApplication {
     @Bean
     InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder pw) {
         var users = List.of(
-                User.withUsername("jlong").password(pw.encode( "pw")).roles("USER").build(),
+                User.withUsername("jlong").password(pw.encode("pw")).roles("USER").build(),
                 User.withUsername("rwinch").password(pw.encode("pw")).roles("USER", "ADMIN").build()
         );
         return new InMemoryUserDetailsManager(users);
@@ -41,7 +41,11 @@ public class AuthApplication {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .with(authorizationServer(), as -> as.oidc(Customizer.withDefaults()))
-                .authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/error").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .oneTimeTokenLogin(configurer -> configurer.tokenGenerationSuccessHandler((request, response, oneTimeToken) -> {
                     var msg = "go to http://localhost:8080/login/ott?token=" + oneTimeToken.getTokenValue();
                     System.out.println(msg);
