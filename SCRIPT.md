@@ -29,10 +29,8 @@ _Or_, if `0.4.0` is out, just add:
 * data jdbc
 * `adoptions` package 
 * build `DogAdoptionService`
-* `vet` package
-* build `Dogtor`
-* "what do you mean by event driven?"
-* decompose with events
+
+## http
 * http controller
 
 ```java
@@ -60,6 +58,14 @@ class DogAdoptionApiController {
 ```
 
 * test: ` http --form POST http://localhost:8080/dogs/45/adoptions name=jlong `
+
+## event based decomposition  
+* `vet` package
+* build `Dogtor`
+* "what do you mean by event driven?"
+* decompose with events
+
+## graphql 
 * nice, but that's old hat.
 * k, well, what about GraphQL? it's schema-first, as well. so let's define the schema in `src/main/resources/graphql/adoptions.graphqls`:
 
@@ -108,6 +114,9 @@ class DogGraphQlController {
 
 * make sure to define `spring.graphql.graphiql.enabled` == `true` to use the graphiql console to try some stuff out.
 * go to `localhost:8080/graphiql`
+
+## grpc
+* timing: 7 mins
 * k, what bout gRPC? it's _also_ schema-first, so let's define the schema in `src/main/proto` (_not_ `src/main/resources/proto`!)
 
 ```protobuf
@@ -140,6 +149,7 @@ message DogsResponse {
 }
 
 ```
+* run the Maven build to get it to generate the code. Make sure to add the two `protobuf/{grpc-java,java}` folders as `Source Roots`.
 
 * now let's define the gRPC service: 
 
